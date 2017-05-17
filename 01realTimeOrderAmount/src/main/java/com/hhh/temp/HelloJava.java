@@ -27,12 +27,12 @@ public class HelloJava {
         Producer<Integer, String> producer = initKafkaProducer();
         for (int i = 0; i < 100000; i++) {
             int randomI = getRandomI(minI, maxI);
-            System.out.println(randomI);
             address = addresss[getRandomI(addresss.length)];
-            System.out.println(address);
+
             Order order = new Order(i, randomI, address);
 //            System.out.println(order);
             Thread.sleep(1000);
+            System.out.println(order);
             sendToKafka(order,producer);
         }
         producer.close();
