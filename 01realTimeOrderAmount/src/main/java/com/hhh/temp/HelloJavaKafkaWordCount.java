@@ -33,8 +33,9 @@ public class HelloJavaKafkaWordCount {
 //            System.err.println("Usage: JavaKafkaWordCount <zkQuorum> <group> <topics> <numThreads>");
 //            System.exit(1);
 //        }
+
         String zkQuorumP = "192.168.101.121:2181";
-        String groupP = "";
+        String groupP = "test-consumer-group";
         String topicsP = "myTopic";
         String numThreadsP = "1";
 
@@ -46,7 +47,9 @@ public class HelloJavaKafkaWordCount {
         };
 
         StreamingExamples.setStreamingLogLevels();
-        SparkConf sparkConf = new SparkConf().setAppName("JavaKafkaWordCount");
+        SparkConf sparkConf = new SparkConf()
+                .setMaster("local[4]")
+                .setAppName("HelloJavaKafkaWordCount");
         // Create the context with 2 seconds batch size
         JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, new Duration(2000));
 
