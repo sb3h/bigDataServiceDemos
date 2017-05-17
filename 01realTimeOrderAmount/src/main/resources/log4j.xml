@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="GB2312" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
     <appender name="org.zblog.all" class="org.apache.log4j.RollingFileAppender">
-        <!-- ÉèÖÃÍ¨µÀID:org.zblog.allºÍÊä³ö·½Ê½£ºorg.apache.log4j.RollingFileAppender -->
-        <param name="File" value="D:/3H/workspaces/bigdata/01realTimeOrderAmount/demo/log/all.output.log" /> <!-- ÉèÖÃFile²ÎÊý£ºÈÕÖ¾Êä³öÎÄ¼þÃû -->
-        <param name="Append" value="false" /> <!-- ÉèÖÃÊÇ·ñÔÚÖØÐÂÆô¶¯·þÎñÊ±£¬ÔÚÔ­ÓÐÈÕÖ¾µÄ»ù´¡Ìí¼ÓÐÂÈÕÖ¾ -->
+        <!-- è®¾ç½®é€šé“ID:org.zblog.allå’Œè¾“å‡ºæ–¹å¼ï¼šorg.apache.log4j.RollingFileAppender -->
+        <param name="File" value="D:/log/all.output.log" /> <!-- è®¾ç½®Fileå‚æ•°ï¼šæ—¥å¿—è¾“å‡ºæ–‡ä»¶å -->
+        <param name="Append" value="false" /> <!-- è®¾ç½®æ˜¯å¦åœ¨é‡æ–°å¯åŠ¨æœåŠ¡æ—¶ï¼Œåœ¨åŽŸæœ‰æ—¥å¿—çš„åŸºç¡€æ·»åŠ æ–°æ—¥å¿— -->
         <param name="MaxBackupIndex" value="10" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p (%c:%L)- %m%n" /> <!-- ÉèÖÃÊä³öÎÄ¼þÏîÄ¿ºÍ¸ñÊ½ -->
+            <param name="ConversionPattern" value="%p (%c:%L)- %m%n" /> <!-- è®¾ç½®è¾“å‡ºæ–‡ä»¶é¡¹ç›®å’Œæ ¼å¼ -->
         </layout>
     </appender>
     <appender name="org.zblog.zcw" class="org.apache.log4j.RollingFileAppender">
-        <param name="File" value="D:/3H/workspaces/bigdata/01realTimeOrderAmount/demo/log/zhuwei.output.log" />
+        <param name="File" value="D:/log/zhuwei.output.log" />
         <param name="Append" value="true" />
-        <param name="MaxFileSize" value="10240" /> <!-- ÉèÖÃÎÄ¼þ´óÐ¡ -->
+        <param name="MaxFileSize" value="10240" /> <!-- è®¾ç½®æ–‡ä»¶å¤§å° -->
         <param name="MaxBackupIndex" value="10" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%p (%c:%L)- %m%n" />
         </layout>
     </appender>
-    <logger name="zcw.log"> <!-- ÉèÖÃÓòÃûÏÞÖÆ£¬¼´zcw.logÓò¼°ÒÔÏÂµÄÈÕÖ¾¾ùÊä³öµ½ÏÂÃæ¶ÔÓ¦µÄÍ¨µÀÖÐ -->
-        <level value="debug" /> <!-- ÉèÖÃ¼¶±ð -->
-        <appender-ref ref="org.zblog.zcw" /> <!-- ÓëÇ°ÃæµÄÍ¨µÀidÏà¶ÔÓ¦ -->
+    <logger name="zcw.log"> <!-- è®¾ç½®åŸŸåé™åˆ¶ï¼Œå³zcw.logåŸŸåŠä»¥ä¸‹çš„æ—¥å¿—å‡è¾“å‡ºåˆ°ä¸‹é¢å¯¹åº”çš„é€šé“ä¸­ -->
+        <level value="debug" /> <!-- è®¾ç½®çº§åˆ« -->
+        <appender-ref ref="org.zblog.zcw" /> <!-- ä¸Žå‰é¢çš„é€šé“idç›¸å¯¹åº” -->
     </logger>
-    <root> <!-- ÉèÖÃ½ÓÊÕËùÓÐÊä³öµÄÍ¨µÀ -->
-        <appender-ref ref="org.zblog.all" /> <!-- ÓëÇ°ÃæµÄÍ¨µÀidÏà¶ÔÓ¦ -->
+    <root> <!-- è®¾ç½®æŽ¥æ”¶æ‰€æœ‰è¾“å‡ºçš„é€šé“ -->
+        <appender-ref ref="org.zblog.all" /> <!-- ä¸Žå‰é¢çš„é€šé“idç›¸å¯¹åº” -->
     </root>
 </log4j:configuration>

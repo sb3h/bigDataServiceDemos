@@ -24,7 +24,7 @@ public class HelloJava {
         int maxI = 1000;
 
         String address = "";
-
+        Producer<Integer, String> producer = initKafkaProducer();
         for (int i = 0; i < 10; i++) {
             int randomI = getRandomI(minI, maxI);
             System.out.println(randomI);
@@ -32,22 +32,33 @@ public class HelloJava {
             System.out.println(address);
             Order order = new Order(i, randomI, address);
 //            System.out.println(order);
-            sendToKafka(order);
+            sendToKafka(order,producer);
         }
+        producer.close();
 
     }
 
-    private static void sendToKafka(Order order) {
-//        //设置配置文件
-        String TOPIC = "myTopic";
+
+    private static Producer<Integer, String> initKafkaProducer() {
+        //设置配置文件
         Properties props = new Properties();
         props.put("metadata.broker.list", "192.168.101.121:9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
 //        props.put("request.required.acks", "1");
         //创建Producer
+
         Producer<Integer, String> producer = new Producer<Integer, String>(new ProducerConfig(props));
+
+        return producer;
+    }
+
+    private static void sendToKafka(Order order, Producer<Integer, String> producer) {
+        String TOPIC = "myTopic";
         //发送数据
         producer.send(new KeyedMessage<Integer, String>(TOPIC, "Message_"+order.toString()));
+
     }
+
+
 
 }
