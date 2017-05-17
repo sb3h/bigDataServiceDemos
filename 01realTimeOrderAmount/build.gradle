@@ -1,0 +1,20 @@
+apply plugin: 'eclipse'
+apply plugin: 'scala'
+
+dependencies {
+//    compile 'org.scala-lang:scala-library:2.10.4'
+}
+
+dependencies {
+
+
+//    compile 'org.apache.kafka:kafka_2.10:0.8.2.2'
+//    compile 'org.apache.kafka:kafka-examples:0.8.2.2'
+
+//    compile 'org.apache.spark:spark-streaming-kafka-0-8_2.10:2.1.1'
+    compile 'org.apache.spark:spark-examples_2.10:1.1.1'
+
+    compile 'commons-collections:commons-collections:3.2.2'
+    compile 'com.google.code.gson:gson:2.8.0'
+    testCompile 'junit:junit:4.12'
+}

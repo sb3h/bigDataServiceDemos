@@ -1,0 +1,30 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.3'
+    //println "getDistributionUrl():"+getDistributionUrl()
+    String distributionUrl = getDistributionUrl().replaceAll("bin.zip","all.zip")
+    setDistributionUrl(distributionUrl)
+}
+wrapper.group "build setup"
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+buildscript {
+    repositories {
+        maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        jcenter()
+    }
+    dependencies {
+
+    }
+}
+
+allprojects {
+    repositories {
+        maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        jcenter()
+    }
+}
+
+apply from: rootProject.file('dependencies.gradle')

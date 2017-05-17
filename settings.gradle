@@ -1,0 +1,2 @@
+rootProject.name = 'bigDataServiceDemos'
+include ':01realTimeOrderAmount'

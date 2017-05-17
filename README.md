@@ -1,2 +1,2 @@
-# bigDataServiceDemos
-入门后的一些小demo
+# templateScalaWithGradleBuild
+use scala to dev By Gradle 
