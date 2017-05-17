@@ -1,2 +1,2 @@
 # templateScalaWithGradleBuild
-use scala to dev By Gradle 
+入门后的一些小demo
