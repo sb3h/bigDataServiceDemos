@@ -1,2 +1,2 @@
 rootProject.name = 'bigDataServiceDemos'
-include ':01realTimeOrderAmount'
+include ':01realTimeComputeAddressOrderAmount'

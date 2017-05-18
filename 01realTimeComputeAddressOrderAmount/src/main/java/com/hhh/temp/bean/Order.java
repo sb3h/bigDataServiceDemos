@@ -22,4 +22,20 @@ public class Order {
     public String toString() {
         return new Gson().toJson(this,this.getClass());
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getOrderAmount() {
+        return orderAmount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public long getDate() {
+        return date;
+    }
 }

@@ -1,0 +1,40 @@
+package com.hhh.temp;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+/**
+ * Created by huanghh on 2017/5/18.
+ */
+public class HelloRedisClient {
+
+    private static  Jedis jedis = new Jedis("192.168.101.121");
+
+    public static void main(String[] args) {
+        testConnect();
+
+
+//        testSetStr();
+
+    }
+
+    private static void testSetStr() {
+        String str_key_hello = "str_key_hello";
+        jedis.set(str_key_hello, "say hello");
+
+        String value = jedis.get(str_key_hello);
+
+        System.out.println(value);
+    }
+
+    /**
+     * 测试不通过的话，就需要去检查redis是否打开保护模式
+     */
+    private static void testConnect() {
+        //连接本地的 Redis 服务
+        System.out.println("Connection to server sucessfully");
+        //查看服务是否运行
+        System.out.println("Server is running: "+jedis.ping());
+    }
+}

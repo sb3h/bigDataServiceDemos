@@ -24,10 +24,14 @@ public class HelloJava {
         int maxI = 1000;
 
         String address = "";
+        int randomI = 0;
         Producer<Integer, String> producer = initKafkaProducer();
-        for (int i = 0; i < 100000; i++) {
-            int randomI = getRandomI(minI, maxI);
-            address = addresss[getRandomI(addresss.length)];
+        for (int i = 0; i < 10; i++) {
+//            randomI = getRandomI(minI, maxI);
+//            address = addresss[getRandomI(addresss.length)];
+            //为了测试程序是否正确，特意写这样
+            randomI = 10;
+            address = addresss[0];
 
             Order order = new Order(i, randomI, address);
 //            System.out.println(order);
@@ -57,7 +61,8 @@ public class HelloJava {
     private static void sendToKafka(Order order, Producer<Integer, String> producer) {
         String TOPIC = "myTopic";
         //发送数据
-        producer.send(new KeyedMessage<Integer, String>(TOPIC, "Message_"+order.toString()));
+//        producer.send(new KeyedMessage<Integer, String>(TOPIC, "Message_"+order.toString()));//暂时使用没有格式的数据
+        producer.send(new KeyedMessage<Integer, String>(TOPIC, ""+order.toString()));
 
     }
 

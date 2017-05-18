@@ -21,6 +21,10 @@ dependencies {
 //    compile 'org.apache.spark:spark-examples_2.11:2.0.1'
 //    compile 'org.apache.spark:spark-examples_2.10:1.1.1'
 
+    compile 'redis.clients:jedis:+'
+
+
+
     compile 'commons-collections:commons-collections:3.2.2'
     compile 'com.google.code.gson:gson:2.8.0'
     testCompile 'junit:junit:4.12'
