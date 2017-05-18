@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.hhh.temp.bean.Order;
+import org.apache.commons.lang.StringUtils;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.function.*;
 import org.apache.spark.examples.streaming.StreamingExamples;
@@ -137,11 +138,15 @@ public class HelloJavaKafkaWordCount {
                 int count = 0;
                 for (Tuple2<String, Integer> tuple : output) {
                     key = tuple._1();
-                    System.out.println("key:"+key);
                     count = tuple._2();
+                    System.out.println("key:"+key);
+                    System.out.println("count:"+count);
                     String value = "";
                     if (len>0) {
                         String redis_value = jedis.hget(hashKey,key);
+                        if (StringUtils.isEmpty(redis_value)) {
+                            redis_value = "0";
+                        }
                         value = String.format("%d",Integer.valueOf(redis_value) + count);
                     }else{
                         value = String.valueOf(count);

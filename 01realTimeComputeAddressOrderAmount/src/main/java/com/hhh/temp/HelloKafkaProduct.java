@@ -14,9 +14,9 @@ import static com.hhh.temp.tools.RandomTools.*;
 /**
  * Created by huanghh on 2017/5/16.
  */
-public class HelloJava {
+public class HelloKafkaProduct {
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("com.hhh.temp.HelloJava");
+        System.out.println("com.hhh.temp.HelloKafkaProduct");
 
         String[] addresss = {"广州", "深圳", "珠海", "汕头", "韶关", "佛山", "江门", "湛江", "茂名", "肇庆", "梅洲", "汕尾", "河源", "阳江", "清远", "东莞", "中山", "潮州", "揭阳", "云浮" };
 
@@ -27,11 +27,11 @@ public class HelloJava {
         int randomI = 0;
         Producer<Integer, String> producer = initKafkaProducer();
         for (int i = 0; i < 10; i++) {
-//            randomI = getRandomI(minI, maxI);
-//            address = addresss[getRandomI(addresss.length)];
+            randomI = getRandomI(minI, maxI);
+            address = addresss[getRandomI(addresss.length)];
             //为了测试程序是否正确，特意写这样
-            randomI = 10;
-            address = addresss[0];
+//            randomI = 10;
+//            address = addresss[0];
 
             Order order = new Order(i, randomI, address);
 //            System.out.println(order);
