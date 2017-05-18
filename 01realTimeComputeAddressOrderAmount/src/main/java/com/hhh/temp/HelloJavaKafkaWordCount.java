@@ -6,15 +6,14 @@ import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.hhh.temp.bean.Order;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.function.*;
 import org.apache.spark.examples.streaming.StreamingExamples;
+import org.apache.spark.streaming.Time;
 import redis.clients.jedis.Jedis;
 import scala.Tuple2;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
-import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.streaming.Duration;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
@@ -123,20 +122,34 @@ public class HelloJavaKafkaWordCount {
                     public Integer call(Integer i1, Integer i2) {
                         System.out.println(String.format("reduceByKey-i1:%d i2:%d", i1, i2));
                         int count = i1 + i2;
-                        String hashKey = "hash_address_amount_key";
-                        String key = "address_amount_key";
-                        long len = jedis.hlen(hashKey);
-                        String value = "";
-                        if (len>0) {
-                            String redis_value = jedis.hget(hashKey,key);
-                            value = String.format("%d",Integer.valueOf(redis_value) + count);
-                        }else{
-                            value = String.valueOf(count);
-                        }
-                        jedis.hset(hashKey,key,value);
-                        return Integer.valueOf(value);
+
+                        return count;
                     }
                 });
+        wordCounts.foreachRDD(new VoidFunction<JavaPairRDD<String, Integer>>() {
+            @Override
+            public void call(JavaPairRDD<String, Integer> stringIntegerJavaPairRDD) throws Exception {
+                List<Tuple2<String, Integer>> output = stringIntegerJavaPairRDD.collect();
+                String hashKey = "hash_address_amount_key";
+                long len = jedis.hlen(hashKey);
+
+                String key = "";
+                int count = 0;
+                for (Tuple2<String, Integer> tuple : output) {
+                    key = tuple._1();
+                    System.out.println("key:"+key);
+                    count = tuple._2();
+                    String value = "";
+                    if (len>0) {
+                        String redis_value = jedis.hget(hashKey,key);
+                        value = String.format("%d",Integer.valueOf(redis_value) + count);
+                    }else{
+                        value = String.valueOf(count);
+                    }
+                    jedis.hset(hashKey,key,value);
+                }
+            }
+        });
 
         wordCounts.print();
         jssc.start();

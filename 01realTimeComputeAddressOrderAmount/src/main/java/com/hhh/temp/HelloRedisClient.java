@@ -4,6 +4,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.util.Map;
+
 /**
  * Created by huanghh on 2017/5/18.
  */
@@ -16,7 +18,12 @@ public class HelloRedisClient {
 
 
 //        testSetStr();
+        testHash();
+    }
 
+    private static void testHash() {
+        Map map = jedis.hgetAll("hash_address_amount_key");
+        System.out.println(map);
     }
 
     private static void testSetStr() {
