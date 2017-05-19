@@ -26,7 +26,7 @@ import org.apache.spark.streaming.kafka.KafkaUtils;
  * Created by huanghh on 2017/5/16.
  */
 @SuppressWarnings("ALL")
-public class HelloJavaKafkaWordCount {
+public class KafkaWordCountByJava {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
@@ -56,7 +56,7 @@ public class HelloJavaKafkaWordCount {
         StreamingExamples.setStreamingLogLevels();
         SparkConf sparkConf = new SparkConf()
                 .setMaster(master)
-                .setAppName("HelloJavaKafkaWordCount");
+                .setAppName("KafkaWordCountByJava");
         // Create the context with 2 seconds batch size
         JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, new Duration(2000));
 

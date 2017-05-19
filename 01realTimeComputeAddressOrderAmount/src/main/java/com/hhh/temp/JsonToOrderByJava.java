@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by huanghh on 2017/5/18.
  */
-public class HelloJsonToOrder {
+public class JsonToOrderByJava {
     public static void main(String[] args) {
         String json = "{\"id\":9,\"orderAmount\":737,\"address\":\"东莞\",\"date\":1495094289510}";
         Class<Order> clazz = Order.class;

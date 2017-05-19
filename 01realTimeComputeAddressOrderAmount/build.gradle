@@ -1,31 +1,36 @@
-apply plugin: 'eclipse'
-apply plugin: 'scala'
+apply plugin: "eclipse"
+apply plugin: "scala"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+/*
+Details: groovy.lang.MissingPropertyException: No such property: daemonServer
+for class: org.gradle.api.tasks.scala.ScalaCompileOptions
+为了避免出警告，所以添加以下配置
+*/
+ScalaCompileOptions.metaClass.daemonServer = true
+ScalaCompileOptions.metaClass.fork = true
+ScalaCompileOptions.metaClass.useAnt = false
+ScalaCompileOptions.metaClass.useCompileDaemon = false
+
+sourceCompatibility = "$javaV"
+targetCompatibility = "$javaV"
 
 dependencies {
-//    compile 'org.scala-lang:scala-library:2.10.4'
+//    compile "$scala"
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-//    compile 'org.apache.kafka:kafka_2.10:0.8.2.2'
-//    compile 'org.apache.kafka:kafka-examples:0.8.2.2'
-
-//    compile 'org.apache.spark:spark-streaming-kafka-0-8_2.10:2.1.1'
-    compile 'org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.1'
-    compile 'org.apache.spark:spark-core_2.11:2.0.1'
-    compile 'org.apache.spark:spark-streaming_2.11:2.0.1'
-//    compile 'org.apache.spark:spark-examples_2.11:2.0.1'
-//    compile 'org.apache.spark:spark-examples_2.10:1.1.1'
-
-    compile 'redis.clients:jedis:+'
+    compile fileTree(dir: "../libs", include: ["*.jar"])
 
 
+    compile "$scala"
 
-    compile 'commons-collections:commons-collections:3.2.2'
-    compile 'com.google.code.gson:gson:2.8.0'
-    testCompile 'junit:junit:4.12'
+    compile "$spark_streaming_kafka"
+    compile "$spark_streaming"
+    compile "$spark_core"
+    compile "$redis_clients"
+
+    compile "$gson"
+    compile "$commons_collections"
+
+    testCompile "$junit"
 }
