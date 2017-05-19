@@ -26,7 +26,7 @@ import org.apache.spark.streaming.kafka.KafkaUtils;
  * Created by huanghh on 2017/5/16.
  */
 @SuppressWarnings("ALL")
-public class KafkaWordCountByJava {
+public class Java03KafkaWordCount {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
@@ -56,7 +56,7 @@ public class KafkaWordCountByJava {
         StreamingExamples.setStreamingLogLevels();
         SparkConf sparkConf = new SparkConf()
                 .setMaster(master)
-                .setAppName("KafkaWordCountByJava");
+                .setAppName("Java03KafkaWordCount");
         // Create the context with 2 seconds batch size
         JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, new Duration(2000));
 
@@ -79,7 +79,7 @@ public class KafkaWordCountByJava {
                 String json = "";
                 if (line.startsWith("{")) {
                     json = line;
-                }else{
+                } else {
                     throw new Exception("data format is not OK,Please check your data format is json");
                 }
                 System.out.println("messages.map-json:" + json);
@@ -111,7 +111,7 @@ public class KafkaWordCountByJava {
                         System.out.println("wordCounts:" + order);
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                         //                //在转化为相应的词
-                        String key = String.format("%s_%s",order.getAddress(),sdf.format(new Date(order.getDate())));
+                        String key = String.format("%s_%s", order.getAddress(), sdf.format(new Date(order.getDate())));
 
                         return new Tuple2<>(key, order.getOrderAmount());
                     }
@@ -139,19 +139,19 @@ public class KafkaWordCountByJava {
                 for (Tuple2<String, Integer> tuple : output) {
                     key = tuple._1();
                     count = tuple._2();
-                    System.out.println("key:"+key);
-                    System.out.println("count:"+count);
+                    System.out.println("key:" + key);
+                    System.out.println("count:" + count);
                     String value = "";
-                    if (len>0) {
-                        String redis_value = jedis.hget(hashKey,key);
+                    if (len > 0) {
+                        String redis_value = jedis.hget(hashKey, key);
                         if (StringUtils.isEmpty(redis_value)) {
                             redis_value = "0";
                         }
-                        value = String.format("%d",Integer.valueOf(redis_value) + count);
-                    }else{
+                        value = String.format("%d", Integer.valueOf(redis_value) + count);
+                    } else {
                         value = String.valueOf(count);
                     }
-                    jedis.hset(hashKey,key,value);
+                    jedis.hset(hashKey, key, value);
                 }
             }
         });

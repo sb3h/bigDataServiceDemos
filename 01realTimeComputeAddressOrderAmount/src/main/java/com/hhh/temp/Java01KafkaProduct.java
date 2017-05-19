@@ -7,16 +7,15 @@ import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 
 import java.util.Properties;
-import java.util.Random;
 
 import static com.hhh.temp.tools.RandomTools.*;
 
 /**
  * Created by huanghh on 2017/5/16.
  */
-public class KafkaProductByJava {
+public class Java01KafkaProduct {
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("com.hhh.temp.KafkaProductByJava");
+        System.out.println("com.hhh.temp.Java01KafkaProduct");
 
         String[] addresss = {"广州", "深圳", "珠海", "汕头", "韶关", "佛山", "江门", "湛江", "茂名", "肇庆", "梅洲", "汕尾", "河源", "阳江", "清远", "东莞", "中山", "潮州", "揭阳", "云浮" };
 

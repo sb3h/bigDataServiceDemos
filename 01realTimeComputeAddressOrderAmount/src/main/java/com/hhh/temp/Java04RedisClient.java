@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by huanghh on 2017/5/18.
  */
-public class RedisClientByJava {
+public class Java04RedisClient {
 
     private static  Jedis jedis = new Jedis("192.168.101.121");
 
