@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.hhh.temp.bean.Order;
+import com.hhh.temp.tools.RedisTools;
 import org.apache.commons.lang.StringUtils;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.function.*;
@@ -129,8 +130,8 @@ public class Java03KafkaWordCount {
                 });
         wordCounts.foreachRDD(new VoidFunction<JavaPairRDD<String, Integer>>() {
             @Override
-            public void call(JavaPairRDD<String, Integer> stringIntegerJavaPairRDD) throws Exception {
-                List<Tuple2<String, Integer>> output = stringIntegerJavaPairRDD.collect();
+            public void call(JavaPairRDD<String, Integer> wordCount) throws Exception {
+                List<Tuple2<String, Integer>> output = wordCount.collect();
                 String hashKey = "hash_address_amount_key";
                 long len = jedis.hlen(hashKey);
 
@@ -161,5 +162,5 @@ public class Java03KafkaWordCount {
         jssc.awaitTermination();
     }
 
-    private static Jedis jedis = new Jedis("192.168.101.121");
+    private static  Jedis jedis = RedisTools.getJedis();
 }

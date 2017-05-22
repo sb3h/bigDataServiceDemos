@@ -17,8 +17,7 @@ object Order {
 
 class Order(id: Int, var orderAmount: Int, var address: String) extends BaseBean(id) with Serializable {
 
-  date = System.currentTimeMillis
-  private var date: Long = 0L
+  private var date: Long = System.currentTimeMillis
 
   def this(orderAmount: Int, address: String) {
     this(0, orderAmount, address)

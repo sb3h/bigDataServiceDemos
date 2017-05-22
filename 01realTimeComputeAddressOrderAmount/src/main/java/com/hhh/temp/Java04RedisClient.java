@@ -1,5 +1,6 @@
 package com.hhh.temp;
 
+import com.hhh.temp.tools.RedisTools;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -11,7 +12,7 @@ import java.util.Map;
  */
 public class Java04RedisClient {
 
-    private static  Jedis jedis = new Jedis("192.168.101.121");
+    private static  Jedis jedis = RedisTools.getJedis();
 
     public static void main(String[] args) {
         testConnect();
