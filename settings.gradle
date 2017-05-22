@@ -1,4 +1,5 @@
 rootProject.name = 'bigDataServiceDemos'
-include ':01realTimeComputeAddressOrderAmount'
-include ':02realTimeComputeAddressOrderAmountByScala'
+//include ':01realTimeComputeAddressOrderAmount'
+//include ':02realTimeComputeAddressOrderAmountByScala'
+include ':03offLineComputeMallHotProduct'
 //include ':00temp'

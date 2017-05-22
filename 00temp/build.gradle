@@ -1,0 +1,36 @@
+apply plugin: "eclipse"
+apply plugin: "scala"
+
+/*
+Details: groovy.lang.MissingPropertyException: No such property: daemonServer
+for class: org.gradle.api.tasks.scala.ScalaCompileOptions
+为了避免出警告，所以添加以下配置
+*/
+ScalaCompileOptions.metaClass.daemonServer = true
+ScalaCompileOptions.metaClass.fork = true
+ScalaCompileOptions.metaClass.useAnt = false
+ScalaCompileOptions.metaClass.useCompileDaemon = false
+
+sourceCompatibility = "$javaV"
+targetCompatibility = "$javaV"
+
+dependencies {
+//    compile "$scala"
+}
+
+dependencies {
+    compile fileTree(dir: "../libs", include: ["*.jar"],exclude:["*-sources.jar"])
+
+
+    compile "$scala"
+
+    compile "$spark_streaming_kafka"
+    compile "$spark_streaming"
+    compile "$spark_core"
+    compile "$redis_clients"
+
+    compile "$gson"
+    compile "$commons_collections"
+
+    testCompile "$junit"
+}
