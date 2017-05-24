@@ -13,6 +13,7 @@ task clean(type: Delete) {
 buildscript {
     repositories {
         maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        maven{url "http://conjars.org/repo/"}//org.pentaho:pentaho-aggdesigner-algorithm:5.1.5-jhyde
         jcenter()
     }
     dependencies {
@@ -23,6 +24,7 @@ buildscript {
 allprojects {
     repositories {
         maven{url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        maven{url "http://conjars.org/repo/"}//org.pentaho:pentaho-aggdesigner-algorithm:5.1.5-jhyde
         jcenter()
     }
 }

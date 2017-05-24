@@ -33,4 +33,6 @@ dependencies {
     compile "$commons_collections"
 
     testCompile "$junit"
+
+    compile project(":00tools")
 }

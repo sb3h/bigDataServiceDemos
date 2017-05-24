@@ -20,8 +20,6 @@ dependencies {
 
 dependencies {
     compile fileTree(dir: "../libs", include: ["*.jar"],exclude:["*-sources.jar"])
-
-
     compile "$scala"
 
     compile "$spark_streaming_kafka"
@@ -32,5 +30,9 @@ dependencies {
     compile "$gson"
     compile "$commons_collections"
 
+    compile "$mysql"
+
     testCompile "$junit"
+
+    compile project(":00tools")
 }
