@@ -43,7 +43,7 @@ object SHiveJdbcClient {
       }
     }
     //replace "hive" here with the name of the user the queries should run as
-    val con: Connection = DriverManager.getConnection("jdbc:hive2://package:10000", "root", "")
+    val con: Connection = DriverManager.getConnection("jdbc:hive2://package:10000?useUnicode=true&characterEncoding=UTF-8", "root", "")
     con
   }
 }
