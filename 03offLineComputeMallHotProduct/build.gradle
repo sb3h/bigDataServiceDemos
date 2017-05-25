@@ -25,7 +25,10 @@ dependencies {
     compile "$spark_streaming_kafka"
     compile "$spark_streaming"
     compile "$spark_core"
+    compile "$spark_sql"
+    compile "$spark_hive"
 
+    compile "$hive"
     compile "$hiveCli"
     compile "$hiveJdbc"//org.apache.hive.jdbc.HiveDriver在这个包底下
 
