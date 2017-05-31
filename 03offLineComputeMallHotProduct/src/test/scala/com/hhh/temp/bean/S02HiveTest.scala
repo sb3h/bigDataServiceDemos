@@ -3,7 +3,7 @@ package com.hhh.temp.bean
 import java.sql.{Connection, Statement}
 
 import com.hhh.temp.hive.SHiveJdbcClient
-import com.hhh.temp.tools.{DataTools, RandomTools, StringTools}
+import com.hhh.temp.tools.{DataTools, HiveTools, RandomTools, StringTools}
 import org.json.JSONObject
 import org.junit.Test
 
@@ -11,10 +11,7 @@ import org.junit.Test
   * Created by huanghh on 2017/5/24.
   */
 class S02HiveTest {
-  private val tableName: String = "hot_product"
-  //  private val encoding: String = "latin1"
-  private val in_encoding: String = "latin1"
-  private val out_encoding: String = "utf-8"
+
 
   @Test def test00temp(): Unit = {
 
@@ -30,7 +27,7 @@ class S02HiveTest {
   @Test def test04clearTableData(): Unit = {
 
     val doWhatMsg = "clear table";
-    val sql = s"delete from $tableName where 1=1";
+    val sql = s"delete from $HiveTools.tableName where 1=1";
     executeSQL(doWhatMsg, sql)
   }
 
@@ -38,7 +35,7 @@ class S02HiveTest {
     val conn = SHiveJdbcClient.getConn
 
     val doWhatMsg = "";
-    val sql = s"select * from $tableName";
+    val sql = s"select * from $HiveTools.tableName";
     executeSQL(doWhatMsg, sql)
   }
 
@@ -63,7 +60,7 @@ class S02HiveTest {
         //      valueSB.append(s"decode(binary('$value'),'utf-8')").append(",")
         valueSB
 //          .append("\"")
-          .append(new String(value.getBytes(), out_encoding))
+          .append(new String(value.getBytes(), HiveTools.out_encoding))
 //          .append("\"")
           .append(",")
       }
@@ -91,7 +88,7 @@ class S02HiveTest {
       //      println(key)
       columnSB.append(key).append(",")
       //      valueSB.append(s"decode(binary('$value'),'utf-8')").append(",")
-      valueSB.append("\"").append(new String(value.getBytes(), in_encoding)).append("\"").append(",")
+      valueSB.append("\"").append(new String(value.getBytes(), HiveTools.in_encoding)).append("\"").append(",")
     }
     //    println(StringTools.getWithOutLastChar(columnSB))
     //    println(StringTools.getWithOutLastChar(valueSB))
@@ -99,7 +96,7 @@ class S02HiveTest {
     val values = StringTools.getWithOutLastChar(valueSB)
 
     val doWhatMsg = "insert data";
-    val sql = s"insert into $tableName($columns) values($values)";
+    val sql = s"insert into $HiveTools.tableName($columns) values($values)";
     if(isPrint){
       println(sql)
     }else{
@@ -117,7 +114,7 @@ class S02HiveTest {
         println(s"$doWhatMsg success by has ResultSet")
         val rs = stat.getResultSet
         while (rs.next) {
-          println(new String(rs.getString(1).getBytes(), out_encoding))
+          println(new String(rs.getString(1).getBytes(), HiveTools.out_encoding))
         }
       } else {
         println(s"$doWhatMsg success")
@@ -167,7 +164,7 @@ class S02HiveTest {
     val columnSQL = columnSB.toString().substring(0, columnSB.length - 1);
     //    println(columnSQL)
 
-    val sql = s"create table if not exists $tableName($columnSQL) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','"
+    val sql = s"create table if not exists $HiveTools.tableName($columnSQL) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','"
     //    println(sql)
     //
     val doWhatMsg = "create table";

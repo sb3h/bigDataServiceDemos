@@ -3,7 +3,7 @@ package com.hhh.temp.bean
 import java.sql.{Connection, Statement}
 
 import com.hhh.temp.hive.SHiveJdbcClient
-import com.hhh.temp.tools.{DataTools, RandomTools, StringTools}
+import com.hhh.temp.tools.{DataTools, HiveTools, RandomTools, StringTools}
 import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.{SparkConf, SparkContext}
 import org.json.JSONObject
@@ -13,10 +13,7 @@ import org.junit.Test
   * Created by huanghh on 2017/5/24.
   */
 class S03SparkBegin2HiveTest {
-  private val tableName: String = "hot_product"
-  //  private val encoding: String = "latin1"
-  private val in_encoding: String = "latin1"
-  private val out_encoding: String = "utf-8"
+
 
 
 
@@ -32,7 +29,7 @@ class S03SparkBegin2HiveTest {
     val conn = SHiveJdbcClient.getConn
 
     val doWhatMsg = "";
-    val sql = s"select * from $tableName"
+    val sql = s"select * from $HiveTools.tableName"
     executeSQL(doWhatMsg, sql)
   }
 

@@ -1,5 +1,6 @@
 package com.hhh.temp.bean
 
+import com.hhh.temp.tools.HiveTools
 import org.apache.spark.sql.SparkSession
 import org.junit.Test
 
@@ -8,11 +9,6 @@ import org.junit.Test
   * Created by huanghh on 2017/5/24.
   */
 class S04SparkAfter2HiveTest {
-  private val tableName: String = "hot_product"
-  //  private val encoding: String = "latin1"
-  private val in_encoding: String = "latin1"
-  private val out_encoding: String = "utf-8"
-
 
   @Test def test00temp(): Unit = {
 
@@ -24,7 +20,7 @@ class S04SparkAfter2HiveTest {
   @Test def test01GetAllData(): Unit = {
 
     val doWhatMsg = "";
-    val sql = s"select * from $tableName"
+    val sql = s"select * from $HiveTools.tableName"
     executeSQL(doWhatMsg, sql)
   }
 
@@ -47,8 +43,8 @@ class S04SparkAfter2HiveTest {
     println("execute:"+execute_sql)
 
     sql(execute_sql)
-      //.show()
-      .collect().foreach(println)
+      .show()
+//      .collect().foreach(println)
   }
 
 
