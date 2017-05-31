@@ -1,8 +1,8 @@
-package com.hhh.temp.bean
+package com.hhh.temp.hive
 
 import java.sql.{Connection, Statement}
 
-import com.hhh.temp.hive.SHiveJdbcClient
+import com.hhh.temp.bean.HotProduct
 import com.hhh.temp.tools.{DataTools, HiveTools, RandomTools, StringTools}
 import org.json.JSONObject
 import org.junit.Test

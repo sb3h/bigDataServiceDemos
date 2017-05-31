@@ -1,8 +1,8 @@
 package com.hhh.temp
 
-import org.apache.spark.{SparkConf, SparkContext}
+import com.hhh.temp.tools.HiveTools
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.hive.HiveContext
+
 
 /**
   * Created by huanghh on 2017/5/25.
@@ -10,9 +10,6 @@ import org.apache.spark.sql.hive.HiveContext
 object ScalaSparkComputeHive {
   val warehouseLocation = "file:${system:user.dir}/spark-warehouse"
 
-  private val tableName: String = "hot_productF"
-
-  val sql = s"select * from $tableName"
 
   def main(args: Array[String]): Unit = {
     val spark = SparkSession
@@ -27,8 +24,15 @@ object ScalaSparkComputeHive {
     import spark.sql
 
 
-//    println("execute:"+execute_sql)
-//
+    val execute_sql = s"select * from ${HiveTools.tableName}"
+    println("execute:" + execute_sql)
+
 //    sql(execute_sql)
+//      .show()
+
+    val dataFromHive = sql(execute_sql).collect()
+    dataFromHive.map(i =>
+      println(i.getAs("product"))
+    )
   }
 }

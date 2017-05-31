@@ -1,12 +1,9 @@
-package com.hhh.temp.bean
-
-import java.sql.{Connection, Statement}
+package com.hhh.temp.spark
 
 import com.hhh.temp.hive.SHiveJdbcClient
-import com.hhh.temp.tools.{DataTools, HiveTools, RandomTools, StringTools}
+import com.hhh.temp.tools.HiveTools
 import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.{SparkConf, SparkContext}
-import org.json.JSONObject
 import org.junit.Test
 
 /**

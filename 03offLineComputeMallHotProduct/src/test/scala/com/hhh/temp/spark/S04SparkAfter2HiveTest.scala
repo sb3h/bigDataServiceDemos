@@ -1,4 +1,4 @@
-package com.hhh.temp.bean
+package com.hhh.temp.spark
 
 import com.hhh.temp.tools.HiveTools
 import org.apache.spark.sql.SparkSession
@@ -36,7 +36,6 @@ class S04SparkAfter2HiveTest {
       .enableHiveSupport()
       .getOrCreate()
 
-    import spark.implicits._
     import spark.sql
 
 
