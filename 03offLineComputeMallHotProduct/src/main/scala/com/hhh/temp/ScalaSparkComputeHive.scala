@@ -15,8 +15,11 @@ object ScalaSparkComputeHive {
     val sc = new SparkContext(sConf)
     val hc = new HiveContext(sc)
 
-    hc.sql("show databases").collect().foreach(println)
+//    hc.sql("show databases").collect().foreach(println)
     hc.sql("show tables").collect().foreach(println)
+
+    var sql = "select *from hot_product"
+    hc.sql(sql).collect().foreach(println)
 
     sc.stop()
   }

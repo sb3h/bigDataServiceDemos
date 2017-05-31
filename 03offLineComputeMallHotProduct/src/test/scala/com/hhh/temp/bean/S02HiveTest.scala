@@ -17,22 +17,21 @@ class S02HiveTest {
   private val out_encoding: String = "utf-8"
 
   @Test def test00temp(): Unit = {
-    val conn = SHiveJdbcClient.getConn
+
 
     val doWhatMsg = "";
     val sql = s"";
-    executeSQL(conn, doWhatMsg, sql)
+    executeSQL(doWhatMsg, sql)
   }
 
   /**
     * 不能用，因为hive不支持delete和update操作
     */
   @Test def test04clearTableData(): Unit = {
-    val conn = SHiveJdbcClient.getConn
 
     val doWhatMsg = "clear table";
     val sql = s"delete from $tableName where 1=1";
-    executeSQL(conn, doWhatMsg, sql)
+    executeSQL(doWhatMsg, sql)
   }
 
   @Test def test03GetData(): Unit = {
@@ -40,7 +39,7 @@ class S02HiveTest {
 
     val doWhatMsg = "";
     val sql = s"select * from $tableName";
-    executeSQL(conn, doWhatMsg, sql)
+    executeSQL(doWhatMsg, sql)
   }
 
   @Test def test05printLoadData(): Unit = {
@@ -79,7 +78,6 @@ class S02HiveTest {
   }
 
   def insertSingleData(bean: HotProduct,isPrint:Boolean): Unit = {
-    val conn = SHiveJdbcClient.getConn
 
     val json = new JSONObject(bean.toString)
     val keys = json.keys
@@ -105,11 +103,12 @@ class S02HiveTest {
     if(isPrint){
       println(sql)
     }else{
-      executeSQL(conn, doWhatMsg, sql)
+      executeSQL( doWhatMsg, sql)
     }
   }
 
-  def executeSQL(conn: Connection, doWhatMsg: String, sql: String): Unit = {
+  def executeSQL(doWhatMsg: String, sql: String): Unit = {
+    val conn = SHiveJdbcClient.getConn
     val stat: Statement = conn.createStatement()
     try {
       println(s"execute:$sql")
@@ -172,7 +171,7 @@ class S02HiveTest {
     //    println(sql)
     //
     val doWhatMsg = "create table";
-    executeSQL(conn, doWhatMsg, sql)
+    executeSQL(doWhatMsg, sql)
 
   }
 }
