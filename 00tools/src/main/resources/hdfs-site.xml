@@ -36,7 +36,7 @@
     <!-- 指定NameNode的元数据在JournalNode上的存放位置 -->
     <property>
         <name>dfs.namenode.shared.edits.dir</name>
-        <value>qjournal://zk01:8485;zk02:8485;zk03:8485/ns</value>
+        <value>qjournal://zk01:8485;zk02:8485/ns</value>
     </property>
     <!-- 指定JournalNode在本地磁盘存放数据的位置 -->
     <property>
