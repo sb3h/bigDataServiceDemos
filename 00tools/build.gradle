@@ -37,12 +37,12 @@ dependencies {
 
 sourceSets {
     main {
-        org.gradle.util.Resources {
+        resources {
             srcDir '../00tools/src/main/resources'
         }
     }
     test {
-        org.gradle.util.Resources {
+        resources {
             srcDir '../00tools/src/main/resources'
         }
     }
