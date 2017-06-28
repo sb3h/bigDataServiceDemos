@@ -27,7 +27,7 @@ public class HiveJdbcClient {
         //replace "hive" here with the name of the user the queries should run as
         Connection con = DriverManager.getConnection("jdbc:hive2://package:10000", "root", "");
         Statement stmt = con.createStatement();
-        String sql = "select * from psn5";
+        String sql = "select * from psn1";
         ResultSet res = stmt.executeQuery(sql);
         while (res.next()) {
             System.out.println(res.getString(1));

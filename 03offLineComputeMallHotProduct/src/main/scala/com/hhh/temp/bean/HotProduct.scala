@@ -4,6 +4,7 @@ import com.google.gson.Gson
 
 /**
   * Created by huanghh on 2017/5/24.
+  * 用户ID	sessionID	访问产品ID	访问的产品类别ID	访问时间
   */
 class HotProduct(
                   //都弄成相同就好了

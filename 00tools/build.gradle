@@ -27,6 +27,8 @@ dependencies {
     compile "$spark_core"
     compile "$redis_clients"
 
+    compile "$hadoop_common_test"
+
     compile "$gson"
     compile "$commons_collections"
 
