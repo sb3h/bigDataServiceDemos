@@ -1,11 +1,14 @@
 package com.hhh.temp.hive
 
 import java.sql.{Connection, Statement}
+import java.util.Calendar
 
 import com.hhh.temp.bean.HotProduct
 import com.hhh.temp.tools.{DataTools, HiveTools, RandomTools, StringTools}
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.{FSDataOutputStream, FileSystem, Path}
 import org.json.JSONObject
-import org.junit.Test
+import org.junit.{After, Before, Test}
 
 /**
   * Created by huanghh on 2017/5/24.
@@ -14,11 +17,52 @@ class S02HiveTest {
 
   val tableName = "hot_product"
 
+  var fs :FileSystem = null;
+
+  @Before def init(): Unit = {
+    fs = FileSystem.get(new Configuration)
+  }
+
+  @After def end(): Unit = {
+    fs.close()
+  }
+
   @Test def test00temp(): Unit = {
 
 
     val doWhatMsg = "";
     val sql = s"";
+    executeSQL(doWhatMsg, sql)
+  }
+
+  @Test def test08loadDataMonthByData(): Unit = {
+    for(i <- 1 to 30){
+//      println(i)
+      loadDataByDay(i)
+    }
+
+  }
+
+
+  @Test def test07createExternalTable(): Unit = {
+
+
+    val doWhatMsg = "create ";
+    val sql =
+      s"""
+         |CREATE EXTERNAL TABLE hot_product(
+         |  buyArea string,
+         |  buyAmount string,
+         |  buyProduct string,
+         |  orderId string,
+         |  timeLong string,
+         |  userId string
+         |  )
+         |  PARTITIONED BY(year string, month string, day string)
+         |   ROW FORMAT DELIMITED
+         |   FIELDS TERMINATED BY ','
+         |  location '/etldata/datacenter.db/temp/hot_product'
+       """.stripMargin;
     executeSQL(doWhatMsg, sql)
   }
 
@@ -30,6 +74,19 @@ class S02HiveTest {
     val doWhatMsg = "clear table";
     //    val sql = s"delete from $tableName where 1=1";
     //    executeSQL(doWhatMsg, sql)
+    val pathStr = "/etldata/datacenter.db/temp/hot_product"
+    val path = new Path(pathStr)
+    val childFileS = fs.listFiles(path,false)
+    while(childFileS.hasNext){
+      val childFile = childFileS.next()
+
+      if(fs.exists(childFile.getPath)){
+        fs.delete(childFile.getPath,true)
+      }
+    }
+
+
+
   }
 
   @Test def test03GetData(): Unit = {
@@ -111,11 +168,25 @@ class S02HiveTest {
     }
   }
 
+  def writeFile(fSys: FileSystem, path: Path, b: Array[Byte]) = {
+    val out: FSDataOutputStream = fSys.create(path)
+    out.write(b)
+    out.close()
+  }
+
   /*
-  提取数据，
-  写成文件，再操作hdfs上次到某个路径，再调用jdbc进行操作hive来load data
-  * */
+    提取数据，
+    写成文件，再操作hdfs上次到某个路径，再调用jdbc进行操作hive来load data
+    * */
   @Test def test05LoadData(): Unit = {
+    loadDataByDay(1)
+
+  }
+
+  def loadDataByDay(day:Int): Unit = {
+    var valuesReturn = new StringBuilder;
+
+
     for (i <- 0 until 100) {
       val bean: HotProduct = new HotProduct(i, i,
         RandomTools.getRandomI(500, 1000),
@@ -125,9 +196,9 @@ class S02HiveTest {
       val json = new JSONObject(bean.toString)
       val keys = json.keys
 
-      val valueSB = new StringBuilder
-      val columnSB = new StringBuilder
 
+      val columnSB = new StringBuilder
+      val valueSB = new StringBuilder
       while (keys.hasNext) {
         val key = keys.next()
         val value = json.getString(String.valueOf(key))
@@ -140,14 +211,41 @@ class S02HiveTest {
           //          .append("\"")
           .append(",")
       }
-      //    println(StringTools.getWithOutLastChar(columnSB))
-      //    println(StringTools.getWithOutLastChar(valueSB))
-      val columns = StringTools.getWithOutLastChar(columnSB).toLowerCase()
+      //      val calendar = Calendar.getInstance()
+      //      valueSB.append(calendar.get(Calendar.YEAR)).append(",")
+      //      valueSB.append(RandomTools.getRandomI(1, 12)).append(",")
+      //      valueSB.append(calendar.get(Calendar.DAY_OF_MONTH)).append(",")
+      //      val columns = StringTools.getWithOutLastChar(columnSB).toLowerCase()
       val values = StringTools.getWithOutLastChar(valueSB)
-
-//      println(values)
-
+      //    println(StringTools.getWithOutLastChar(columnSB))
+      valuesReturn.append(values).append("\n")
     }
+
+    val outVal = valuesReturn.toString()
+    println(outVal)
+    var outPathStr = "/etldata/datacenter.db/temp/hot_product/data"
+    val outPath = new Path(outPathStr);
+
+    if (fs.exists(outPath)) {
+      fs.delete(outPath, true);
+    }
+    writeFile(fs, outPath, outVal.getBytes("utf-8"))
+
+
+    val doWhatMsg = s"load data into table $tableName";
+    val c = Calendar.getInstance()
+    val sql =
+      s"""
+         |load data inpath '$outPathStr'
+         |into table $tableName
+         |partition (
+         |year='${c.get(Calendar.YEAR)}',
+         |month='${c.get(Calendar.MONTH)}',
+         |day='${day}'
+         |)
+       """.stripMargin
+    //         |day='${c.get(Calendar.DAY_OF_MONTH)}'
+    executeSQL(doWhatMsg, sql)
   }
 
   @Test def test02InsertSingleData() {

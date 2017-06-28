@@ -7,5 +7,9 @@ import com.google.gson.Gson
   */
 class BaseBean() {
   private var time :Long = System.currentTimeMillis()
+
+  def setTime(time :Long): Unit ={
+    this.time = time;
+  }
 }
 

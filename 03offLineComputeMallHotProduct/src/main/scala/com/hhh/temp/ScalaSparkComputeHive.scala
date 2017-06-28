@@ -1,5 +1,6 @@
 package com.hhh.temp
 
+import com.hhh.temp.bean.HotProduct
 import com.hhh.temp.tools.HiveTools
 import org.apache.spark.sql.SparkSession
 
@@ -27,12 +28,22 @@ object ScalaSparkComputeHive {
     val execute_sql = s"select * from ${HiveTools.tableName}"
     println("execute:" + execute_sql)
 
-//    sql(execute_sql)
-//      .show()
+    //    sql(execute_sql)
+    //      .show()
 
-    val dataFromHive = sql(execute_sql).collect()
-    dataFromHive.map(i =>
-      println(i.getAs("product"))
-    )
+//    val dataFromHive =
+      sql(execute_sql)
+        .show()
+//      .collect()
+//    val hotProducts = dataFromHive.map(row =>
+//      //      println(i.getAs("product"))
+//      HotProduct.getInstance(row)
+//    )
+//
+//    val products = hotProducts.map((hotProduct) => (
+//        hotProduct.product
+//      ))
+//
+//    val wordCounts = products.reduceByKey(_ + _)
   }
 }

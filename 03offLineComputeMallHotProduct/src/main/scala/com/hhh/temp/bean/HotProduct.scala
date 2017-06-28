@@ -1,6 +1,22 @@
 package com.hhh.temp.bean
 
 import com.google.gson.Gson
+import org.apache.spark.sql.Row
+
+object HotProduct{
+
+  def getInstance(value: Row): HotProduct = {
+   val instance = new HotProduct(
+     value.getAs("userid").toString.toLong,
+     value.getAs("orderId").toString.toLong,
+     value.getAs("amount").toString.toLong,
+     value.getAs("product").toString,
+     value.getAs("buyArea").toString
+   )
+    instance.setTime(value.getAs("time").toString.toLong)
+    instance
+  }
+}
 
 /**
   * Created by huanghh on 2017/5/24.
