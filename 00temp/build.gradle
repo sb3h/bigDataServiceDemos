@@ -36,3 +36,16 @@ dependencies {
 
     compile project(":00tools")
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDir '../00tools/src/main/resources'
+        }
+    }
+    test {
+        resources {
+            srcDir '../00tools/src/main/resources'
+        }
+    }
+}

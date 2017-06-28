@@ -34,3 +34,16 @@ dependencies {
 
     testCompile "$junit"
 }
+
+sourceSets {
+    main {
+        org.gradle.util.Resources {
+            srcDir '../00tools/src/main/resources'
+        }
+    }
+    test {
+        org.gradle.util.Resources {
+            srcDir '../00tools/src/main/resources'
+        }
+    }
+}

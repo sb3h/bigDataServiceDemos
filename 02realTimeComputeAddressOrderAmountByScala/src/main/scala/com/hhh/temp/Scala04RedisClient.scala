@@ -11,8 +11,8 @@ object Scala04RedisClient {
 
   def main(args: Array[String]) {
 //    testConnect()
-      testSetStr();
-//    testHgetAll()
+//      testSetStr();
+    testHgetAll()
   }
 
   private def testHgetAll() {
