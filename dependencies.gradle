@@ -23,6 +23,7 @@ ext {
             spark_core = "org.apache.spark:spark-core_$scalaV:$sparkV",
             spark_sql = "org.apache.spark:spark-sql_$scalaV:$sparkV",
             spark_hive = "org.apache.spark:spark-hive_$scalaV:$sparkV",
+            spark_examples = "org.apache.spark:spark-examples_2.10:1.1.1",
 
             //hive
             hive = "org.apache.hive:hive:$hiveV",

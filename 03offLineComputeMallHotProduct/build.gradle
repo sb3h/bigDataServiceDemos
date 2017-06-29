@@ -27,6 +27,7 @@ dependencies {
     compile "$spark_core"
     compile "$spark_sql"
     compile "$spark_hive"
+//    compile "$spark_examples"
 
     compile "$hive"
     compile "$hiveCli"

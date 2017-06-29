@@ -20,7 +20,14 @@ class S04SparkAfter2HiveTest {
   @Test def test01GetAllData(): Unit = {
 
     val doWhatMsg = "";
-    val sql = s"select buyarea from default.${HiveTools.tableName}  where year='2017' and month='5' and day='11'"
+    val sql =
+      s"""
+         |select count(buyarea) from default.${HiveTools.tableName}
+         | where 1=1
+         | and year='2017'
+         | and month='5'
+         | and day='11'
+       """.stripMargin
     //    val sql = "select buyarea from hot_product where year='2017' and month='5' and day='11'"
     executeSQL(doWhatMsg, sql)
   }
@@ -42,9 +49,11 @@ class S04SparkAfter2HiveTest {
 
     println("execute:" + execute_sql)
 
+    //    val data =
     sql(execute_sql)
-      .show()
-    //      .collect().foreach(println)
+      //      .show()
+      .collect()
+      .foreach(println)
   }
 
 
